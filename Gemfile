@@ -73,3 +73,5 @@ end
 
 # Dotenv is a zero-dependency gem to load environment variables from a .env file into ENV in development
 gem 'dotenv'
+
+gem "devise", "~> 4.9"
