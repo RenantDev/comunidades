@@ -1,24 +1,49 @@
-# README
+# Comunidades
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Este README documenta os passos necessários para configurar e executar a aplicação.
 
-Things you may want to cover:
+## Requisitos
 
-* Ruby version
+* Ruby versão: ruby 3.1.6
+* Sistema de gerenciamento de pacotes: Bundler
+* Banco de dados: PostgreSQL
 
-* System dependencies
+## Dependências do Sistema
 
-* Configuration
+* Docker
+* Docker Compose
 
-* Database creation
+## Configuração
 
-* Database initialization
+1. Clone o repositório:
+    ```sh
+    git clone git@github.com:chorume-dev/comunidades.git
+    cd comunidades
+    ```
 
-* How to run the test suite
+2. Instale as dependências:
+    ```sh
+    bundle install
+    ```
 
-* Services (job queues, cache servers, search engines, etc.)
+3. Configure as variáveis de ambiente:
+    ```sh
+    cp .env.example .env
+    ```
 
-* Deployment instructions
+## Criação do Banco de Dados
 
-* ...
+1. Crie e migre o banco de dados:
+    ```sh
+    rails db:create db:migrate
+    ```
+
+## Inicialização do Banco de Dados
+
+1. Popule o banco de dados com dados iniciais (se aplicável):
+    ```sh
+    rails db:seed
+    ```
+
+2. Acesse a aplicação em `http://localhost:3000`
+
