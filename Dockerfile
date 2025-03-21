@@ -10,7 +10,8 @@ RUN apt-get update -qq && \
     nodejs \
     curl \
     libvips \
-    pkg-config && \
+    pkg-config \
+    dos2unix && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -26,14 +27,17 @@ RUN bundle install
 # Copia o código-fonte
 COPY . .
 
+# Corrige finais de linha Windows (CRLF) para Unix (LF)
+RUN dos2unix entrypoint.sh && \
+    dos2unix bin/* && \
+    find . -name "*.rb" -type f -exec dos2unix {} \; && \
+    chmod +x entrypoint.sh bin/*
+
 # Cria diretórios necessários
 RUN mkdir -p tmp/pids
-
-# Garante que o script entrypoint.sh é executável
-RUN chmod +x entrypoint.sh
 
 # Expõe a porta 3000
 EXPOSE 3000
 
 # Define o comando de entrada
-CMD ["./entrypoint.sh"]
+CMD ["bash", "./entrypoint.sh"]
