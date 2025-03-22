@@ -24,7 +24,36 @@ A maneira mais rápida e recomendada de executar o projeto é utilizando Docker:
 
 4. Acesse a aplicação em: `http://localhost:3000`
 
-### Comandos Úteis Docker
+### Gerenciamento do Banco de Dados com Docker
+
+Se você encontrar erros de conexão com o banco de dados ou precisar recriar/atualizar o banco, siga estes passos:
+
+- Criar o banco de dados:
+  ```sh
+  docker-compose exec web rails db:create
+  ```
+
+- Executar as migrações:
+  ```sh
+  docker-compose exec web rails db:migrate
+  ```
+
+- Criar o banco e executar as migrações de uma só vez:
+  ```sh
+  docker-compose exec web rails db:setup
+  ```
+
+- Recriar o banco de dados (apaga e cria novamente):
+  ```sh
+  docker-compose exec web rails db:reset
+  ```
+
+- Adicionar dados de seed:
+  ```sh
+  docker-compose exec web rails db:seed
+  ```
+
+### Outros Comandos Úteis Docker
 
 - Ver logs da aplicação:
   ```sh
@@ -45,6 +74,36 @@ A maneira mais rápida e recomendada de executar o projeto é utilizando Docker:
   ```sh
   docker-compose exec web rails [comando]
   ```
+
+## Resolução de Problemas Comuns
+
+### Erro de conexão com o banco de dados
+
+Se você receber um erro como `ActiveRecord::NoDatabaseError`, siga os passos abaixo:
+
+1. Verifique se o contêiner do PostgreSQL está em execução:
+   ```sh
+   docker-compose ps
+   ```
+
+2. Crie o banco de dados:
+   ```sh
+   docker-compose exec web rails db:create
+   ```
+
+3. Execute as migrações:
+   ```sh
+   docker-compose exec web rails db:migrate
+   ```
+
+### Erro ao compilar assets do Tailwind
+
+Se os estilos não estiverem sendo aplicados corretamente:
+
+```sh
+docker-compose exec web rails tailwindcss:build
+docker-compose restart web
+```
 
 ## Configuração Sem Docker (Alternativa)
 

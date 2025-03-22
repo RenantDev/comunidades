@@ -1,11 +1,8 @@
 #!/bin/bash
 
-# Corrigir finais de linha
-echo "Corrigindo finais de linha..."
-find . -type f -name "*.rb" -o -name "*.rake" | xargs sed -i "s/\r$//"
-find ./bin -type f | xargs sed -i "s/\r$//"
-sed -i "s/\r$//" config.ru
-chmod +x ./bin/*
+# Remover server.pid
+echo "Removendo server.pid..."
+rm -f tmp/pids/server.pid
 
 # Criar diretório para assets
 echo "Criando diretório para assets..."
@@ -15,10 +12,6 @@ touch app/assets/builds/.keep
 # Compilar assets do Tailwind
 echo "Compilando assets do Tailwind..."
 bin/rails tailwindcss:build
-
-# Remover server.pid
-echo "Removendo server.pid..."
-rm -f tmp/pids/server.pid
 
 # Preparar banco de dados
 echo "Preparando banco de dados..."
